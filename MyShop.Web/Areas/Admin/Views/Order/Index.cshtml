@@ -1,0 +1,71 @@
+﻿@{
+    ViewBag.PageTitle = "Orders Management";
+    ViewBag.CardTitle = "Orders";
+    Layout = "~/Views/Shared/_Dashboard.cshtml";
+}
+
+<table id="ProductTable" class="table table-hover" width="100%">
+    <thead>
+        <tr>
+            <td>Id</td>
+            <td>Name</td>
+            <td>Phone Number</td>
+            <td>Email</td>
+            <td>Order Status</td>
+            <td>Order Total</td>
+            <td>Actions</td>
+        </tr>
+    </thead>
+    <tbody>
+    </tbody>
+
+</table>
+
+
+
+
+
+@section Scripts {
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.datatables.net/2.1.0/css/dataTables.dataTables.css" />
+    <script src="https://cdn.datatables.net/2.1.0/js/dataTables.js"></script>
+
+    <script>
+        var dtble;
+        $(document).ready(function () {
+            loaddata();
+        });
+
+        function loaddata() {
+            dtble = $("#ProductTable").DataTable({
+                "ajax": {
+                    "url": "/Admin/Order/GetData"
+                },
+                "columns": [
+                    { "data": "id" },
+                    { "data": "name" },
+                    { "data": "phone" },
+                    { "data": "applicationUser.email" },
+                    { "data": "orderStatus" },
+                    { "data": "orderTotalPrice" },
+                    {
+                        "data": "id",
+                        "render": function (data) {
+                            return `
+                                    <a href="/Admin/Order/Details?orderid=${data}" class="btn btn-warning">Details</a>
+
+                                    `
+
+                        }
+
+                    }
+
+
+
+                ]
+            });
+        }
+    </script>
+
+
+}
