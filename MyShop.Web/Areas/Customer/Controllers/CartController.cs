@@ -164,11 +164,11 @@ namespace MyShop.Web.Areas.Customer.Controllers
                 orderHeader.PaymentIntendId = session.PaymentIntentId;
 				unitOfWork.Complete();
             }
-			List<ShoppingCart> ShoppingCarts = 
 
+			var ShoppingCarts = 
                 unitOfWork.ShoppingCart.GetAll(e=>e.ApplicationUserId==orderHeader.ApplicationUserId).ToList();
-
-			unitOfWork.ShoppingCart.RemoveRange(ShoppingCarts);
+            HttpContext.Session.Clear();
+            unitOfWork.ShoppingCart.RemoveRange(ShoppingCarts);
             unitOfWork.Complete();
 
             return View(id);
